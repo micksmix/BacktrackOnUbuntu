@@ -32,11 +32,9 @@ If you opened it with Geany, click on the _Document_ menu, Select _Set Filetype_
 
 With Geany, I find it easiest to collapse the menu blocks for the other sub-menus within Gnome's _Applications_ menu.
 
-After collapsing the _System Tools_ section, paste the following XML directly after it. This will define the BackTrack menu's and submenu's:
+After collapsing the _System Tools_ section, paste the XML from the `BtMenuStructure.xml` file directly after it. This will define the BackTrack menu's and submenu's:
 
 ![Adding BackTrack menu structure with Geany][9]
-
-NOTE that because of the length, I have moved the XML code to a new post. [Please obtain the BackTrack menu XML from this post][10].
 
 After updating this with the BackTrack XML, you may now save and close the document.
 

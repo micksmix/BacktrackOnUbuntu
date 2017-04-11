@@ -58,7 +58,7 @@ The next step is to add the BackTrack repositories to your apt-get sources.list 
 wget http://repo.offensive-security.com/dist/bt4/binary/public-key && sudo apt-key add public-key && sudo aptitude update
 ```    
 
-**3\. Build your package list **(NOTE that I am specifying a proxy server — remove this part from the command if you do not use a proxy):
+**3\. Build your package list ** (NOTE that I am specifying a proxy server — remove this part from the command if you do not use a proxy):
     
 `links -http-proxy myproxyserver.com:8080 -dump http://repo.offensive-security.com/dist/bt4/binary/ | awk '{print $3}' | grep -i deb | cut -d . -f 1 > backtrack.txt`
     

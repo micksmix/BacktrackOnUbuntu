@@ -6,9 +6,9 @@ I originally wrote this script in 2009 to allow me to install the BackTrack 4 to
 
 So, here's a brief overview of the steps in this lengthy blog post:
 
-1. [Prepare the GNOME menu with the appropriate BackTrack menu structure][3]
-2. [Install BackTrack 4 tools within Ubuntu][4]
-3. [Run a Perl script to update the newly created menu entries so that they will launch a terminal correctly within Ubuntu][5]
+1. Prepare the GNOME menu with the appropriate BackTrack menu structure
+2. Install BackTrack 4 tools within Ubuntu
+3. Run a Perl script to update the newly created menu entries so that they will launch a terminal correctly within Ubuntu
 
 
 
@@ -43,8 +43,7 @@ At this point, we can follow the instructions in my previous post to install the
 Let's begin by launching a root bash shell by typing:
     
     
-    
-    sudo bash
+`sudo bash`
     
 
 The next step is to add the BackTrack repositories to your apt-get sources.list file:
@@ -53,36 +52,29 @@ The next step is to add the BackTrack repositories to your apt-get sources.list 
     
     
     
-    sudo echo deb http://repo.offensive-security.com/dist/bt4 binary/ >> /etc/apt/sources.list
+`sudo echo deb http://repo.offensive-security.com/dist/bt4 binary/ >> /etc/apt/sources.list`
     
 
 **2\. Import the Backtrack PGP key and update your sources** (and set a proxy server to use if you need it):
-    
-    
-    
-    export http_proxy="http://myproxyserver.com:8080"
-    wget http://repo.offensive-security.com/dist/bt4/binary/public-key && sudo apt-key add public-key && sudo aptitude update
-    
+```export http_proxy="http://myproxyserver.com:8080"
+wget http://repo.offensive-security.com/dist/bt4/binary/public-key && sudo apt-key add public-key && sudo aptitude update
+```    
 
 **3\. Build your package list **(NOTE that I am specifying a proxy server — remove this part from the command if you do not use a proxy):
     
-    
-    
-    links -http-proxy myproxyserver.com:8080 -dump http://repo.offensive-security.com/dist/bt4/binary/ | awk '{print $3}' | grep -i deb | cut -d . -f 1 > backtrack.txt
+```links -http-proxy myproxyserver.com:8080 -dump http://repo.offensive-security.com/dist/bt4/binary/ | awk '{print $3}' | grep -i deb | cut -d . -f 1 > backtrack.txt
+```
     
 
 **If you do not use a proxy server, then the command will look like this:**
     
-    
-    
-    links -dump http://repo.offensive-security.com/dist/bt4/binary/ | awk '{print $3}' | grep -i deb | cut -d . -f 1 > backtrack.txt
+```links -dump http://repo.offensive-security.com/dist/bt4/binary/ | awk '{print $3}' | grep -i deb | cut -d . -f 1 > backtrack.txt
+```
     
 
 **4\. Install packages:**
     
-    
-    
-    for i in $(cat backtrack.txt); do sudo aptitude -y install $i; done
+`for i in $(cat backtrack.txt); do sudo aptitude -y install $i; done`
     
 
 Credit for the BackTrack menu settings goes to[ or4n9e at Remote Exploit's forums][11].
@@ -94,31 +86,24 @@ I saved that file to my home folder at _/home/mick_
 
 Next we need to run the script, but first we will backup all menu files in case something goes wrong. Open up a terminal:
     
-    
-    
-    cd ~/
-    mkdir menu_backup
-    sudo cp /usr/local/share/applications/* ~/menu_backup
+```
+cd ~/
+mkdir menu_backup
+sudo cp /usr/local/share/applications/* ~/menu_backup
+```
     
 
 Now we have made a backup of the menus, so it is safe to run our Perl script now:
     
-    
-    
-    sudo perl ./UpdateBTMenu.pl
+`sudo perl ./UpdateBTMenu.pl`
     
 
 **That's it! Your BackTrack tools (with menu structure) are ready to use within Ubuntu!**
 
 If for some reason there was a problem with executing the Perl script or your menu isn't working, you can copy the backed up menu items to their original location:
     
+`sudo cp ~/menu_backup/* /usr/local/share/applications/`
     
-    
-    sudo cp ~/menu_backup/* /usr/local/share/applications/
-    
-[3]: https://micksmix.wordpress.com#PrepareMenu-
-[4]: https://micksmix.wordpress.com#InstallBTTools-
-[5]: https://micksmix.wordpress.com#RunPerlScript-
 [6]: https://micksmix.files.wordpress.com/2009/11/snapshot2.png?w=595 "BackTrack 4 Menu in Ubuntu!"
 [7]: http://www.geany.org/
 [8]: https://micksmix.files.wordpress.com/2009/11/geany2.png?w=595 "Select file type within Geany"
